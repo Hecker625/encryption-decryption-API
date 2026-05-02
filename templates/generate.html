@@ -49,6 +49,12 @@
                 color: #a78bfa;
                 animation: fadeOut 300s forwards;
             }
+
+            /* make them all the same */
+            .hyperlink, .hyperlink:link, .hyperlink:visited, .hyperlink:hover, .hyperlink:active {
+                color: #a78bfa;
+                text-decoration: none;
+            }
         
             #generate {
                 border: none;
@@ -110,7 +116,7 @@
                 <button id="generate" onclick="send()">Generate Key</button>
                 <p id="key"></p>
                 <p>The key should be automatically copied. Don't share it with anyone. You won't see this key again, as it will slowly fade for eternity</p>
-                <p>Didn't work? Go to <a href="https://nerdtek.onrender.com/generate">nerdtek.onrender.com/generate</a> and copy the text on that page</p>
+                <p>Didn't work? Go to <a href="https://nerdtek.onrender.com/generate" class="hyperlink">nerdtek.onrender.com/generate</a> and copy the text on that page</p>
             </div>
         </div>
         
