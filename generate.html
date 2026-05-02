@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Encryption Decryption API</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background: #0f172a;
+                color: white;
+                text-align: center;
+                margin: 0;
+                padding: 20px;
+            }
+        
+            h1 {
+                margin-bottom: 30px;
+            }
+        
+            .main {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+        
+            .card {
+                background: #1e293b;
+                padding: 20px;
+                border-radius: 12px;
+                width: 500px;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+                transition: transform 0.2s;
+                position: relative;
+            }
+        
+            .card:hover {
+                transform: translateY(-5px);
+            }
+
+            .card::before {
+                filter: blur(1rem);
+            }
+        
+            #key {
+                font-size: 16px;
+                margin: 10px 0;
+                color: #a78bfa;
+                animation: fadeOut 300s forwards;
+            }
+        
+            #generate {
+                border: none;
+                position: relative;
+                display: inline-block;
+                margin-top: 10px;
+                padding: 10px 15px;
+                background: linear-gradient(90deg, #6366f1, #a78bfa);
+                color: white;
+                text-decoration: none;
+                border-radius: 8px;
+                font-weight: bold;
+                overflow: hidden;
+                transition: transform 0.2s;
+            }
+        
+            #generate:hover {
+                transform: translateY(-2px);
+            }
+        
+            /* the shiny sweep */
+            #generate::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(-45deg, transparent, #FFFFFF99, transparent);
+                transition: 0.5s;
+            }
+        
+            /* animate it on hover */
+            #generate:hover::before {
+                left: 100%;
+            }
+
+            @keyframes fadeOut {
+                0% {
+                    opacity: 1;
+                }
+
+                90% {
+                    font-size: 0;
+                }
+
+                100% {
+                    opacity: 0;
+                    display: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <h1 id="welcome", class="title">Welcome user {{ip}}</h1>
+        <div class="main">
+            <div class="card">
+                <h1 class="title">Generate API Key</h1>
+                <button id="generate" onclick="send()">Generate Key</button>
+                <p id="key"></p>
+                <p>The key should be automatically copied. Don't share it with anyone. You won't see this key again, as it will slowly fade for eternity</p>
+            </div>
+        </div>
+        
+        <script>
+            async function send(){
+                const data = await fetch("/generate").then(r => r.text());
+                document.getElementById("key").innerText = data;
+                navigator.clipboard?.writeText(data).catch(()=>{}); // requires HTTPS + user gesture
+                document.getElementById("generate").disabled = true
+            }
+                  
+            // function send(){
+            //     fetch("/generate")
+            //         .then(response => response.text())
+            //         .then(data => {
+            //             document.getElementById("key").innerText = data;
+            //         });
+            //         // navigator.clipboard.writeText(data)
+            // }
+        </script>
+    </body>
+</html>
